@@ -13,9 +13,10 @@ body {
     min-height: 100vh;
 }
 
+/* Контейнер зроблено трохи ширшим (800px), щоб карта і фото вміщувалися поруч */
 .container {
     width: 100%;
-    max-width: 600px;
+    max-width: 800px; 
     padding: 20px;
     text-align: center;
 }
@@ -32,10 +33,13 @@ h2 {
     font-weight: normal;
 }
 
+/* --- ГОЛОВНА СТОРІНКА --- */
 .grid-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .day-btn {
@@ -55,7 +59,8 @@ h2 {
 .day-btn:hover {
     background-color: #f0f0f0;
 }
-/* --- Стилі для сторінки дня --- */
+
+/* --- СТОРІНКА ДНЯ --- */
 .header-nav {
     display: flex;
     align-items: center;
@@ -118,7 +123,7 @@ h2 {
     background-color: rgba(0,0,0,0.1);
 }
 
-/* Кольори */
+/* Кольори пар */
 .bg-lab { background-color: #a3d8f4; }
 .bg-lec { background-color: #c4e132; }
 .bg-sem { background-color: #32c456; }
@@ -137,37 +142,93 @@ h2 {
     border-radius: 50%;
     border: 2px solid black;
 }
-/* --- Стилі для сторінок Геолокації та Інфо --- */
-.geo-content, .info-content {
+
+/* --- СТОРІНКА ІНФО (ВИКЛАДАЧ) --- */
+.info-content {
     display: flex;
-    flex-direction: column;
+    align-items: stretch; /* Робить висоту фото і таблиці однаковою */
     gap: 20px;
-    align-items: center;
+    justify-content: center;
 }
-.map-container iframe {
-    width: 100%;
-    max-width: 500px;
-    height: 300px;
-    border: 2px solid black;
+.photo-container {
+    display: flex;
+    flex-shrink: 0;
+    width: 250px; /* Фіксована ширина для великого фото */
 }
 .photo-container img {
     width: 100%;
-    max-width: 400px;
-    height: auto;
+    height: 100%; /* Розтягується на всю доступну висоту блоку */
+    object-fit: cover; 
     border: 2px solid black;
 }
 .details-container {
-    text-align: center;
     border: 2px solid black;
     padding: 30px;
-    width: 100%;
-    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    text-align: center;
 }
 
-@media (min-width: 768px) {
-    .geo-content, .info-content {
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-start;
+/* --- СТОРІНКА ГЕОЛОКАЦІЇ --- */
+.geo-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Дві рівні колонки */
+    gap: 20px;
+    align-items: start;
+}
+.map-container iframe {
+    width: 100%;
+    height: 450px;
+    border: 2px solid black;
+}
+.geo-info-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Розносить текст вгору, а фото вниз */
+    height: 450px; /* Висота дорівнює висоті карти */
+}
+#geo-address {
+    font-size: 24px;
+    text-align: left;
+    margin: 0;
+}
+.photo-wrapper {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-end;
+}
+.photo-wrapper img {
+    width: 100%;
+    max-height: 380px;
+    object-fit: cover;
+    border: 2px solid black;
+}
+
+/* --- АДАПТИВНІСТЬ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ --- */
+@media (max-width: 768px) {
+    .info-content, .geo-layout {
+        display: flex;
+        flex-direction: column; /* На телефонах все стає в одну колонку */
+    }
+    .photo-container {
+        width: 100%;
+        height: 300px;
+    }
+    .photo-container img {
+        height: 100%;
+    }
+    .geo-info-side {
+        height: auto;
+        gap: 20px;
+    }
+    .map-container iframe {
+        height: 300px;
+    }
+    .grid-buttons {
+        display: flex;
+        flex-direction: column;
     }
 }
