@@ -21,23 +21,28 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("week-dates").textContent = `Дата ${format(monday)}-${format(thursday)}`;
     }
 
-    // === ЛОГІКА СТОРІНКИ ДНЯ ===
+// === ЛОГІКА СТОРІНКИ ДНЯ ===
     const scheduleListEl = document.getElementById("schedule-list");
     if (scheduleListEl) {
-        // Отримуємо день з URL (наприклад, ?day=wednesday)
+        // 1. Рахуємо, який зараз тиждень (Чисельник чи Знаменник)
+        const startDate = new Date('2026-09-01'); 
+        const today = new Date();
+        const diffDays = Math.floor(Math.abs(today - startDate) / (1000 * 60 * 60 * 24));
+        const weekNumber = Math.floor(diffDays / 7) + 1;
+        const isNumerator = weekNumber % 2 !== 0;
+
+        // 2. Отримуємо день з URL
         const urlParams = new URLSearchParams(window.location.search);
         const dayParam = urlParams.get('day');
         
-        // Знаходимо дані для цього дня
-        const dayData = scheduleData[dayParam];
+        // 3. Вибираємо правильний розклад залежно від тижня
+        const currentScheduleData = isNumerator ? scheduleNumerator : scheduleDenominator;
+        const dayData = currentScheduleData[dayParam];
 
         if (dayData) {
             document.getElementById("day-title").textContent = dayData.title;
-            // Для прикладу ставимо сьогоднішню дату
-            const today = new Date();
             document.getElementById("day-date").textContent = `${today.getDate().toString().padStart(2, '0')}.${(today.getMonth() + 1).toString().padStart(2, '0')}.${today.getFullYear()}`;
 
-            // Генеруємо пари
             dayData.classes.forEach(cls => {
                 const classCard = document.createElement("div");
                 classCard.className = `class-card bg-${cls.type}`;
@@ -57,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 scheduleListEl.appendChild(classCard);
             });
         } else {
-            scheduleListEl.innerHTML = "<p>Немає пар на цей день або день не обрано.</p>";
+            scheduleListEl.innerHTML = "<p>На цей день пар немає.</p>";
         }
     }
 // === ЛОГІКА СТОРІНКИ ГЕОЛОКАЦІЇ ===
