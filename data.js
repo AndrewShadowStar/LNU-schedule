@@ -1,40 +1,62 @@
-const scheduleData = {
+const scheduleNumerator = {
+    monday: {
+        title: "ПОНЕДІЛОК",
+        classes: [
+            { number: "7", time: "18:10-19:30", name: "Інтелектуальні системи аналізу даних у менеджменті", teacher: "доц. Прийма С. С.", type: "lab", room: "ауд.307", infoId: "int-sys", locId: "chornovola" },
+            { number: "8", time: "19:40-21:00", name: "Управління змінами", teacher: "доц. Грищук А. М.", type: "lec", room: "ауд.114", infoId: "upr-zmin", locId: "chornovola" }
+        ]
+    },
+    tuesday: {
+        title: "ВІВТОРОК",
+        classes: [
+            { number: "7", time: "18:10-19:30", name: "Цифрові системи управління бізнесом", teacher: "доц. Мельник Б. К.", type: "lec", room: "ауд.203", infoId: "cyf-sys", locId: "main" },
+            { number: "8", time: "19:40-21:00", name: "Технології підтримки прийняття управлінських рішень", teacher: "доц. Мельник Б. К.", type: "lec", room: "ауд.203", infoId: "tech-pid", locId: "main" }
+        ]
+    },
     wednesday: {
         title: "СЕРЕДА",
         classes: [
-            {
-                number: "6",
-                time: "16:40-18:00",
-                name: "Цифрові системи управління бізнесом",
-                teacher: "доц. Мельник Б. К.",
-                type: "lab",
-                room: "ауд.200",
-                infoId: "cyf-sys",
-                locId: "chornovola"
-            },
-            {
-                number: "7",
-                time: "18:10-19:30",
-                name: "Технології підтримки прийняття управлінських рішень",
-                teacher: "доц. Мельник Б. К.",
-                type: "lab",
-                room: "ауд.200",
-                infoId: "tech-pid",
-                locId: "chornovola"
-            },
-            {
-                number: "8",
-                time: "19:40-21:00",
-                name: "Стратегічне управління людськими ресурсами",
-                teacher: "проф. Приймак В. І.",
-                type: "lec",
-                room: "ауд.108",
-                infoId: "strat-upr",
-                locId: "main"
-            }
+            { number: "6", time: "16:40-18:00", name: "Цифрові системи управління бізнесом", teacher: "доц. Мельник Б. К.", type: "lab", room: "ауд.200", infoId: "cyf-sys", locId: "main" },
+            { number: "7", time: "18:10-19:30", name: "Технології підтримки прийняття управлінських рішень", teacher: "доц. Мельник Б. К.", type: "lab", room: "ауд.200", infoId: "tech-pid", locId: "main" },
+            { number: "8", time: "19:40-21:00", name: "Стратегічне управління людськими ресурсами", teacher: "проф. Приймак В. І.", type: "lec", room: "ауд.108", infoId: "strat-upr", locId: "main" }
+        ]
+    },
+    thursday: {
+        title: "ЧЕТВЕР",
+        classes: [
+            { number: "7", time: "18:10-19:30", name: "Інтелектуальні системи аналізу даних у менеджменті", teacher: "доц. Прийма С. С.", type: "lec", room: "ауд.203", infoId: "int-sys", locId: "main" },
+            { number: "8", time: "19:40-21:00", name: "Проектний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lec", room: "ауд.203", infoId: "proj-men", locId: "main" }
         ]
     }
-    // Сюди пізніше додамо monday, tuesday, thursday
+};
+
+const scheduleDenominator = {
+    monday: {
+        title: "ПОНЕДІЛОК",
+        classes: [
+            { number: "7", time: "18:10-19:30", name: "Управління змінами", teacher: "доц. Грищук А. М.", type: "sem", room: "ауд.114", infoId: "upr-zmin", locId: "chornovola" },
+            { number: "8", time: "19:40-21:00", name: "Управління змінами", teacher: "доц. Грищук А. М.", type: "lec", room: "ауд.114", infoId: "upr-zmin", locId: "chornovola" }
+        ]
+    },
+    tuesday: {
+        title: "ВІВТОРОК",
+        classes: scheduleNumerator.tuesday.classes // Пари такі самі, як у чисельнику
+    },
+    wednesday: {
+        title: "СЕРЕДА",
+        classes: [
+            { number: "7", time: "18:10-19:30", name: "Стратегічне управління людськими ресурсами", teacher: "проф. Приймак В. І.", type: "sem", room: "ауд.108", infoId: "strat-upr", locId: "main" },
+            { number: "8", time: "19:40-21:00", name: "Стратегічне управління людськими ресурсами", teacher: "проф. Приймак В. І.", type: "lec", room: "ауд.108", infoId: "strat-upr", locId: "main" }
+        ] // 6 пари немає
+    },
+    thursday: {
+        title: "ЧЕТВЕР",
+        classes: [
+            { number: "6", time: "16:40-18:00", name: "Проектний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lab", room: "ауд.211", infoId: "proj-men", locId: "main" },
+            { number: "7", time: "18:10-19:30", name: "Інтелектуальні системи аналізу даних у менеджменті", teacher: "доц. Прийма С. С.", type: "lec", room: "ауд.203", infoId: "int-sys", locId: "main" },
+            { number: "8", time: "19:40-21:00", name: "Проектний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lec", room: "ауд.203", infoId: "proj-men", locId: "main" }
+        ]
+    }
 };
 const locations = {
     "main": {
