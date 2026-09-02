@@ -1,13 +1,42 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // === ЛОГІКА ТЕМНОЇ ТЕМИ ===
+    const themeToggle = document.getElementById("theme-toggle");
+    // Перевіряємо, чи зберіг користувач темну тему минулого разу
+    const currentTheme = localStorage.getItem("theme") || "light";
+    if (currentTheme === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    
+    if (themeToggle) {
+        themeToggle.textContent = currentTheme === "dark" ? "☀️" : "🌙";
+        themeToggle.addEventListener("click", () => {
+            let theme = document.documentElement.getAttribute("data-theme");
+            if (theme === "dark") {
+                document.documentElement.removeAttribute("data-theme");
+                localStorage.setItem("theme", "light");
+                themeToggle.textContent = "🌙";
+            } else {
+                document.documentElement.setAttribute("data-theme", "dark");
+                localStorage.setItem("theme", "dark");
+                themeToggle.textContent = "☀️";
+            }
+        });
+    }
+
+    // === БАЗОВІ ЗМІННІ ДЛЯ РОЗРАХУНКУ ЧАСУ ===
+    const today = new Date();
+    const currentMinutes = today.getHours() * 60 + today.getMinutes(); // Поточний час у хвилинах
+    const daysMap = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const todayName = daysMap[today.getDay()]; // Який сьогодні день англійською
+
+    // Розрахунок чисельника/знаменника
+    const startDate = new Date('2026-09-01'); 
+    const diffDays = Math.floor(Math.abs(today - startDate) / (1000 * 60 * 60 * 24));
+    const weekNumber = Math.floor(diffDays / 7) + 1;
+    const isNumerator = weekNumber % 2 !== 0;
+    const currentScheduleData = isNumerator ? scheduleNumerator : scheduleDenominator;
+
     // === ЛОГІКА ГОЛОВНОЇ СТОРІНКИ ===
     const weekTypeEl = document.getElementById("week-type");
     if (weekTypeEl) {
-        const startDate = new Date('2026-09-01'); 
-        const today = new Date();
-        const diffDays = Math.floor(Math.abs(today - startDate) / (1000 * 60 * 60 * 24));
-        const weekNumber = Math.floor(diffDays / 7) + 1;
-        
-        const isNumerator = weekNumber % 2 !== 0;
         weekTypeEl.textContent = isNumerator ? "ЧИСЕЛЬНИК" : "ЗНАМЕННИК";
 
         const currentDay = today.getDay(); 
@@ -19,24 +48,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const format = (date) => `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}`;
         document.getElementById("week-dates").textContent = `Дата ${format(monday)}-${format(thursday)}`;
+
+        // 1. ПІДСВІЧУВАННЯ ПОТОЧНОГО ДНЯ
+        const todayBtn = document.querySelector(`.day-btn[href="day.html?day=${todayName}"]`);
+        if (todayBtn) todayBtn.classList.add("active-day");
+
+        // 2. ВІДЖЕТ НАСТУПНОЇ ПАРИ
+        const widgetEl = document.getElementById("next-class-widget");
+        if (widgetEl && currentScheduleData[todayName]) {
+            const todayClasses = currentScheduleData[todayName].classes;
+            let activeClass = null;
+            
+            for (let cls of todayClasses) {
+                const [startStr, endStr] = cls.time.split('-');
+                const startMins = parseInt(startStr.split(':')[0]) * 60 + parseInt(startStr.split(':')[1]);
+                const endMins = parseInt(endStr.split(':')[0]) * 60 + parseInt(endStr.split(':')[1]);
+                
+                // Якщо поточний час менший за кінець пари — це наша ціль (вона або йде зараз, або буде наступною)
+                if (currentMinutes <= endMins) {
+                    activeClass = { ...cls, isNow: currentMinutes >= startMins };
+                    break;
+                }
+            }
+
+            if (activeClass) {
+                widgetEl.style.display = "block";
+                let roomNumber = activeClass.room.replace('ауд.', '').trim();
+                let displayRoom = activeClass.locId === 'chornovola' ? `Ч${roomNumber}` : `${roomNumber}`;
+                widgetEl.innerHTML = `<strong>${activeClass.isNow ? '🔴 Зараз' : '⏳ Наступна'}:</strong> ${activeClass.time} — ${activeClass.name} (ауд. ${displayRoom})`;
+            }
+        }
     }
 
     // === ЛОГІКА СТОРІНКИ ДНЯ ===
     const scheduleListEl = document.getElementById("schedule-list");
     if (scheduleListEl) {
-        // 1. Рахуємо, який зараз тиждень (Чисельник чи Знаменник)
-        const startDate = new Date('2026-09-01'); 
-        const today = new Date();
-        const diffDays = Math.floor(Math.abs(today - startDate) / (1000 * 60 * 60 * 24));
-        const weekNumber = Math.floor(diffDays / 7) + 1;
-        const isNumerator = weekNumber % 2 !== 0;
-
-        // 2. Отримуємо день з URL
         const urlParams = new URLSearchParams(window.location.search);
         const dayParam = urlParams.get('day');
-        
-        // 3. Вибираємо правильний розклад залежно від тижня
-        const currentScheduleData = isNumerator ? scheduleNumerator : scheduleDenominator;
         const dayData = currentScheduleData[dayParam];
 
         if (dayData) {
@@ -45,9 +93,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
             dayData.classes.forEach(cls => {
                 const classCard = document.createElement("div");
-                classCard.className = `class-card bg-${cls.type}`;
                 
-                // Форматування номера аудиторії (додаємо "Ч" для Чорновола)
+                // 3. ІНДИКАТОР ПОТОЧНОЇ ПАРИ (ПУЛЬСАЦІЯ)
+                const [startStr, endStr] = cls.time.split('-');
+                const startMins = parseInt(startStr.split(':')[0]) * 60 + parseInt(startStr.split(':')[1]);
+                const endMins = parseInt(endStr.split(':')[0]) * 60 + parseInt(endStr.split(':')[1]);
+                
+                // Перевіряємо чи сьогодні потрібний день і чи час потрапляє в проміжок пари
+                const isNow = (dayParam === todayName && currentMinutes >= startMins && currentMinutes <= endMins);
+                
+                classCard.className = `class-card bg-${cls.type} ${isNow ? 'current-class' : ''}`;
+                
                 let roomNumber = cls.room.replace('ауд.', '').trim();
                 let displayRoom = cls.locId === 'chornovola' ? `ауд. Ч${roomNumber}` : `ауд. ${roomNumber}`;
                 
@@ -61,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         ${cls.teacher}, ${cls.type === 'lab' ? 'лаб.' : cls.type === 'lec' ? 'лек.' : 'сем.'}, 
                         <a href="geo.html?loc=${cls.locId}" class="class-link">${displayRoom}</a>
                     </div>
-                    <a href="info.html?id=${cls.infoId}" class="info-btn">&#9654;</a>
+                    <a href="info.html?id=${cls.infoId}" class="info-btn">▶</a>
                 `;
                 scheduleListEl.appendChild(classCard);
             });
@@ -70,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // === ЛОГІКА СТОРІНКИ ГЕОЛОКАЦІЇ ===
+    // === ЛОГІКА СТОРІНКИ ГЕОЛОКАЦІЇ ТА ІНФО ===
     const geoAddressEl = document.getElementById("geo-address");
     if (geoAddressEl) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -86,7 +142,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // === ЛОГІКА СТОРІНКИ ІНФО (ВИКЛАДАЧІ) ===
     const subjectNameEl = document.getElementById("subject-name");
     if (subjectNameEl) {
         const urlParams = new URLSearchParams(window.location.search);
