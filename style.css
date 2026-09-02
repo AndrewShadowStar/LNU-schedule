@@ -1,19 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* Змінні для світлої теми (Пастельна палітра) */
+:root {
+    --bg-color: #f4f7f6;
+    --text-color: #1a1a1a;
+    --card-bg: #ffffff;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --border-color: transparent;
+    --radius: 12px;
+    
+    /* Пастельні кольори пар */
+    --lab-bg: #e0f2fe; /* М'який блакитний */
+    --lec-bg: #fef08a; /* М'який жовтий */
+    --sem-bg: #dcfce7; /* М'який зелений */
+    
+    --accent: #3b82f6; /* Синій для активних елементів */
+}
+
+/* Змінні для темної теми */
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #e5e5e5;
+    --card-bg: #1e1e1e;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --border-color: #333333;
+    
+    /* Приглушені кольори пар для темної теми */
+    --lab-bg: #0369a1; 
+    --lec-bg: #a16207; 
+    --sem-bg: #15803d; 
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 body {
-    background-color: #ffffff;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* Контейнер зроблено трохи ширшим (800px), щоб карта і фото вміщувалися поруч */
 .container {
     width: 100%;
     max-width: 800px; 
@@ -21,23 +55,15 @@ body {
     text-align: center;
 }
 
-h1 {
-    font-size: 26px;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-}
-
-h2 {
-    font-size: 22px;
-    margin-bottom: 40px;
-    font-weight: normal;
-}
+h1 { font-size: 26px; margin-bottom: 5px; font-weight: 700; }
+h2 { font-size: 20px; margin-bottom: 30px; font-weight: 400; color: #666; }
+[data-theme="dark"] h2 { color: #aaa; }
 
 /* --- ГОЛОВНА СТОРІНКА --- */
 .grid-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 15px;
     max-width: 600px;
     margin: 0 auto;
 }
@@ -46,21 +72,29 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
-    color: black;
+    background-color: var(--card-bg);
+    color: var(--text-color);
     text-decoration: none;
-    font-size: 20px;
-    font-weight: bold;
-    border: 2px solid black;
-    height: 150px;
-    transition: background-color 0.2s;
+    font-size: 18px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    height: 120px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .day-btn:hover {
-    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
-/* --- СТОРІНКА ДНЯ --- */
+.day-btn.active-day {
+    background-color: var(--accent);
+    color: white;
+}
+
+/* --- СТОРІНКА ДНЯ (КАРТКИ ПАР) --- */
 .header-nav {
     display: flex;
     align-items: center;
@@ -69,166 +103,137 @@ h2 {
 }
 .back-btn {
     text-decoration: none;
-    color: black;
-    font-size: 40px;
+    color: var(--text-color);
+    font-size: 30px;
     position: absolute;
     left: 0;
 }
-.title-container {
-    width: 100%;
-    text-align: center;
-}
+.title-container { width: 100%; text-align: center; }
+
 .class-card {
     display: flex;
-    border: 2px solid black;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
     margin-bottom: 15px;
     align-items: stretch;
     text-align: left;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    position: relative;
 }
+
 .class-time {
-    width: 70px;
-    padding: 5px;
-    border-right: 2px solid black;
+    width: 75px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
-    font-size: 14px;
-    background-color: #f9f9f9;
+    font-weight: 700;
+    font-size: 13px;
+    background-color: rgba(0,0,0,0.03);
+    border-right: 1px solid rgba(0,0,0,0.05);
 }
+[data-theme="dark"] .class-time { background-color: rgba(255,255,255,0.03); }
+
 .class-info {
     flex-grow: 1;
-    padding: 10px;
-    font-size: 16px;
-    font-weight: bold;
+    padding: 15px;
+    font-size: 15px;
+    line-height: 1.4;
 }
+
 .class-link {
-    color: black;
+    color: var(--accent);
     text-decoration: none;
+    font-weight: 600;
 }
-.class-link:hover {
-    text-decoration: underline;
-}
+
 .info-btn {
     width: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: black;
-    font-size: 30px;
+    color: var(--text-color);
+    font-size: 20px;
+    opacity: 0.5;
 }
-.info-btn:hover {
-    background-color: rgba(0,0,0,0.1);
+.info-btn:hover { opacity: 1; }
+
+/* Кольори пар (застосовуються як лівий маркер) */
+.bg-lab { border-left: 6px solid var(--lab-bg); }
+.bg-lec { border-left: 6px solid var(--lec-bg); }
+.bg-sem { border-left: 6px solid var(--sem-bg); }
+
+/* Підсвічування поточної пари */
+.current-class {
+    border: 2px solid var(--accent);
+    animation: pulse 2s infinite;
 }
 
-/* Кольори пар */
-.bg-lab { background-color: #a3d8f4; }
-.bg-lec { background-color: #c4e132; }
-.bg-sem { background-color: #32c456; }
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
 
 /* Легенда */
 .legend {
     display: flex;
     justify-content: space-around;
     margin-top: 30px;
-    font-weight: bold;
+    font-size: 14px;
 }
-.leg-item { display: flex; align-items: center; gap: 5px; }
+.leg-item { display: flex; align-items: center; gap: 8px; }
 .circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid black;
+    width: 16px; height: 16px; border-radius: 50%;
+}
+.circle.bg-lab { background-color: var(--lab-bg); border: none;}
+.circle.bg-lec { background-color: var(--lec-bg); border: none;}
+.circle.bg-sem { background-color: var(--sem-bg); border: none;}
+
+/* --- ГЕОЛОКАЦІЯ ТА ІНФО --- */
+.info-content { display: flex; align-items: stretch; gap: 20px; justify-content: center; }
+.photo-container { display: flex; flex-shrink: 0; width: 250px; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.photo-container img { width: 100%; height: 100%; object-fit: cover; }
+.details-container { background-color: var(--card-bg); border-radius: var(--radius); padding: 30px; display: flex; flex-direction: column; justify-content: center; flex-grow: 1; text-align: center; box-shadow: var(--shadow); }
+
+.geo-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.map-container iframe { width: 100%; height: 400px; border-radius: var(--radius); border: none; box-shadow: var(--shadow); }
+.geo-info-side { display: flex; flex-direction: column; justify-content: space-between; height: 400px; }
+#geo-address { font-size: 20px; text-align: left; margin: 0; color: var(--text-color); font-weight: 700;}
+.photo-wrapper { width: 100%; flex-grow: 1; display: flex; align-items: flex-end; margin-top: 15px;}
+.photo-wrapper img { width: 100%; max-height: 320px; object-fit: cover; border-radius: var(--radius); box-shadow: var(--shadow); }
+
+/* Віджет наступної пари */
+#next-class-widget {
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    display: none; /* Приховано за замовчуванням */
 }
 
-/* --- СТОРІНКА ІНФО (ВИКЛАДАЧ) --- */
-.info-content {
-    display: flex;
-    align-items: stretch; /* Робить висоту фото і таблиці однаковою */
-    gap: 20px;
-    justify-content: center;
-}
-.photo-container {
-    display: flex;
-    flex-shrink: 0;
-    width: 250px; /* Фіксована ширина для великого фото */
-}
-.photo-container img {
-    width: 100%;
-    height: 100%; /* Розтягується на всю доступну висоту блоку */
-    object-fit: cover; 
-    border: 2px solid black;
-}
-.details-container {
-    border: 2px solid black;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-grow: 1;
-    text-align: center;
-}
-
-/* --- СТОРІНКА ГЕОЛОКАЦІЇ --- */
-.geo-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Дві рівні колонки */
-    gap: 20px;
-    align-items: start;
-}
-.map-container iframe {
-    width: 100%;
-    height: 450px;
-    border: 2px solid black;
-}
-.geo-info-side {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Розносить текст вгору, а фото вниз */
-    height: 450px; /* Висота дорівнює висоті карти */
-}
-#geo-address {
+/* Перемикач теми */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
     font-size: 24px;
-    text-align: left;
-    margin: 0;
-}
-.photo-wrapper {
-    width: 100%;
-    flex-grow: 1;
-    display: flex;
-    align-items: flex-end;
-}
-.photo-wrapper img {
-    width: 100%;
-    max-height: 380px;
-    object-fit: cover;
-    border: 2px solid black;
+    cursor: pointer;
 }
 
-/* --- АДАПТИВНІСТЬ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ --- */
 @media (max-width: 768px) {
-    .info-content, .geo-layout {
-        display: flex;
-        flex-direction: column; /* На телефонах все стає в одну колонку */
-    }
-    .photo-container {
-        width: 100%;
-        height: 300px;
-    }
-    .photo-container img {
-        height: 100%;
-    }
-    .geo-info-side {
-        height: auto;
-        gap: 20px;
-    }
-    .map-container iframe {
-        height: 300px;
-    }
-    .grid-buttons {
-        display: flex;
-        flex-direction: column;
-    }
+    .info-content, .geo-layout { display: flex; flex-direction: column; }
+    .photo-container { width: 100%; height: 300px; }
+    .geo-info-side { height: auto; gap: 15px; }
+    .map-container iframe { height: 300px; }
+    .grid-buttons { display: flex; flex-direction: column; }
 }
