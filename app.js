@@ -60,4 +60,36 @@ document.addEventListener("DOMContentLoaded", () => {
             scheduleListEl.innerHTML = "<p>Немає пар на цей день або день не обрано.</p>";
         }
     }
+// === ЛОГІКА СТОРІНКИ ГЕОЛОКАЦІЇ ===
+    const geoAddressEl = document.getElementById("geo-address");
+    if (geoAddressEl) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const locParam = urlParams.get('loc');
+        const locData = locations[locParam];
+
+        if (locData) {
+            geoAddressEl.textContent = locData.address;
+            document.getElementById("geo-map").innerHTML = `<iframe src="${locData.mapUrl}" allowfullscreen="" loading="lazy"></iframe>`;
+            document.getElementById("geo-photo").src = locData.photo;
+        } else {
+            geoAddressEl.textContent = "Локацію не знайдено";
+        }
+    }
+
+    // === ЛОГІКА СТОРІНКИ ІНФО (ВИКЛАДАЧІ) ===
+    const subjectNameEl = document.getElementById("subject-name");
+    if (subjectNameEl) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const idParam = urlParams.get('id');
+        const infoData = teachersInfo[idParam];
+
+        if (infoData) {
+            subjectNameEl.textContent = infoData.name;
+            document.getElementById("subject-type").textContent = infoData.type;
+            document.getElementById("teacher-name").textContent = infoData.teacherName;
+            document.getElementById("teacher-photo").src = infoData.photo;
+        } else {
+            subjectNameEl.textContent = "Інформацію не знайдено";
+        }
+    }
 });
