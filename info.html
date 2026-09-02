@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інформація про дисципліну</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-nav">
+            <button onclick="history.back()" class="back-btn" style="background:none; border:none; cursor:pointer;">&#9664;</button>
+            <div class="title-container">
+                <h1>Інформація про дисципліну</h1>
+            </div>
+        </div>
+        
+        <div class="info-content">
+            <div class="photo-container">
+                <img id="teacher-photo" src="" alt="Фото викладача">
+            </div>
+            <div class="details-container">
+                <h2 id="subject-name" style="margin-bottom: 15px;">Назва дисципліни</h2>
+                <h3 id="subject-type" style="margin-bottom: 15px; font-weight: normal;">Залік / Екзамен</h3>
+                <h3 id="teacher-name">ПІБ викладача</h3>
+            </div>
+        </div>
+    </div>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
