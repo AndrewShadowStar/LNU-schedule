@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Геолокація</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-nav">
+            <button onclick="history.back()" class="back-btn" style="background:none; border:none; cursor:pointer;">&#9664;</button>
+            <div class="title-container">
+                <h1>ГЕОЛОКАЦІЯ</h1>
+            </div>
+        </div>
+        
+        <h2 id="geo-address" style="margin-bottom: 20px;">Завантаження...</h2>
+        
+        <div class="geo-content">
+            <div class="map-container" id="geo-map">
+                <!-- Карта з'явиться тут -->
+            </div>
+            <div class="photo-container">
+                <img id="geo-photo" src="" alt="Фото локації">
+            </div>
+        </div>
+    </div>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
