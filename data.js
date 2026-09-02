@@ -39,12 +39,12 @@ const scheduleData = {
 const locations = {
     "main": {
         address: "Економічний факультет, пр. Свободи, 18",
-        mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.076540306385!2d24.0255!3d49.8415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDnCsDUwJzI5LjQiTiAyNMKwMDEnMzEuOCJF!5e0!3m2!1suk!2sua!4v1690000000000",
+        mapUrl: "https://maps.google.com/maps?q=Економічний%20факультет%20ЛНУ%20ім.%20Івана%20Франка,%20Львів&t=&z=16&ie=UTF8&iwloc=&output=embed",
         photo: "Економічний факультет Львівського національного університету імені Івана Франка.webp"
     },
     "chornovola": {
         address: "Університет банківської справи, Чорновола 61",
-        mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2572.645003666666!2d24.0210!3d49.8490!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDnCsDUwJzU2LjQiTiAyNMKwMDEnMTUuNiJF!5e0!3m2!1suk!2sua!4v1690000000000",
+        mapUrl: "https://maps.google.com/maps?q=Львівський%20інститут%20банківської%20справи,%20Чорновола%2061,%20Львів&t=&z=16&ie=UTF8&iwloc=&output=embed",
         photo: "Львівський інститут банківської справи.jpg"
     }
 };
