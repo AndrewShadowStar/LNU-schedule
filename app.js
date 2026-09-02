@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("week-dates").textContent = `Дата ${format(monday)}-${format(thursday)}`;
     }
 
-// === ЛОГІКА СТОРІНКИ ДНЯ ===
+    // === ЛОГІКА СТОРІНКИ ДНЯ ===
     const scheduleListEl = document.getElementById("schedule-list");
     if (scheduleListEl) {
         // 1. Рахуємо, який зараз тиждень (Чисельник чи Знаменник)
@@ -47,6 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const classCard = document.createElement("div");
                 classCard.className = `class-card bg-${cls.type}`;
                 
+                // Форматування номера аудиторії (додаємо "Ч" для Чорновола)
+                let roomNumber = cls.room.replace('ауд.', '').trim();
+                let displayRoom = cls.locId === 'chornovola' ? `ауд. Ч${roomNumber}` : `ауд. ${roomNumber}`;
+                
                 classCard.innerHTML = `
                     <div class="class-time">
                         <span>${cls.number}</span>
@@ -55,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="class-info">
                         ${cls.name},<br>
                         ${cls.teacher}, ${cls.type === 'lab' ? 'лаб.' : cls.type === 'lec' ? 'лек.' : 'сем.'}, 
-                        <a href="geo.html?loc=${cls.locId}" class="class-link">${cls.room}</a>
+                        <a href="geo.html?loc=${cls.locId}" class="class-link">${displayRoom}</a>
                     </div>
                     <a href="info.html?id=${cls.infoId}" class="info-btn">&#9654;</a>
                 `;
@@ -65,7 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
             scheduleListEl.innerHTML = "<p>На цей день пар немає.</p>";
         }
     }
-// === ЛОГІКА СТОРІНКИ ГЕОЛОКАЦІЇ ===
+
+    // === ЛОГІКА СТОРІНКИ ГЕОЛОКАЦІЇ ===
     const geoAddressEl = document.getElementById("geo-address");
     if (geoAddressEl) {
         const urlParams = new URLSearchParams(window.location.search);
