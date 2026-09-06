@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const diffDays = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
     const weekNumber = Math.floor(diffDays / 7) + 1;
     const isNumerator = weekNumber % 2 !== 0;
+    
     // === ЛОГІКА ГОЛОВНОЇ СТОРІНКИ ===
     const weekTypeEl = document.getElementById("week-type");
     if (weekTypeEl) {
