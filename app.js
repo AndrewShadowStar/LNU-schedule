@@ -26,16 +26,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const daysMap = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     const todayName = daysMap[today.getDay()];
 
-    const startDate = new Date('2026-09-01'); 
-    const diffDays = Math.floor(Math.abs(today - startDate) / (1000 * 60 * 60 * 24));
+    // Встановлюємо точку відліку на понеділок першого навчального тижня
+    const startDate = new Date('2026-08-31T00:00:00'); 
+    // Скидаємо години поточного дня для точної математики діб
+    const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    
+    const diffDays = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
     const weekNumber = Math.floor(diffDays / 7) + 1;
     const isNumerator = weekNumber % 2 !== 0;
-    
-    // БЕЗПЕЧНА ПЕРЕВІРКА: чи існує база даних. Якщо ні - сайт не зламається!
-    let currentScheduleData = null;
-    if (typeof scheduleNumerator !== 'undefined' && typeof scheduleDenominator !== 'undefined') {
-        currentScheduleData = isNumerator ? scheduleNumerator : scheduleDenominator;
-    }
 
     // === ЛОГІКА ГОЛОВНОЇ СТОРІНКИ ===
     const weekTypeEl = document.getElementById("week-type");
