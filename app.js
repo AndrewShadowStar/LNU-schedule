@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-   // === БАЗОВІ ЗМІННІ ДЛЯ РОЗРАХУНКУ ЧАСУ ===
+    // === БАЗОВІ ЗМІННІ ДЛЯ РОЗРАХУНКУ ЧАСУ ===
     const today = new Date();
     const currentMinutes = today.getHours() * 60 + today.getMinutes();
     const daysMap = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
@@ -36,7 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const weekNumber = Math.floor(diffDays / 7) + 1;
     const isNumerator = weekNumber % 2 !== 0;
-    
+
+    // ОСЬ РЯДОК, ЯКИЙ БУЛО ВТРАЧЕНО: Без нього код ламався!
+    let currentScheduleData = null;
+    if (typeof scheduleNumerator !== 'undefined' && typeof scheduleDenominator !== 'undefined') {
+        currentScheduleData = isNumerator ? scheduleNumerator : scheduleDenominator;
+    }
+
     // === ЛОГІКА ГОЛОВНОЇ СТОРІНКИ ===
     const weekTypeEl = document.getElementById("week-type");
     if (weekTypeEl) {
