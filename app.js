@@ -20,18 +20,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // === БАЗОВІ ЗМІННІ ДЛЯ РОЗРАХУНКУ ЧАСУ ===
+   // === БАЗОВІ ЗМІННІ ДЛЯ РОЗРАХУНКУ ЧАСУ ===
     const today = new Date();
     const currentMinutes = today.getHours() * 60 + today.getMinutes();
     const daysMap = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     const todayName = daysMap[today.getDay()];
 
-    // Встановлюємо точку відліку на понеділок першого навчального тижня
-    const startDate = new Date('2026-08-31T00:00:00'); 
-    // Скидаємо години поточного дня для точної математики діб
+    // ЗАЛІЗОБЕТОННИЙ ФОРМАТ: (Рік, Місяць, День). У JS місяці починаються з 0, тому 7 - це серпень.
+    const startDate = new Date(2026, 7, 31); 
     const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     
-    const diffDays = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
+    // Використовуємо Math.round, щоб захиститися від переходів на зимовий/літній час
+    const diffTime = Math.abs(currentDate - startDate);
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24)); 
+    
     const weekNumber = Math.floor(diffDays / 7) + 1;
     const isNumerator = weekNumber % 2 !== 0;
     
