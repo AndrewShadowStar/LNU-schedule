@@ -237,3 +237,11 @@ h2 { font-size: 20px; margin-bottom: 30px; font-weight: 400; color: #666; }
     .map-container iframe { height: 300px; }
     .grid-buttons { display: flex; flex-direction: column; }
 }
+
+/* Дизайн для скасованих пар Приймака */
+.bg-canceled { background-color: #e0e0e0; border-left: 5px solid #999; color: #666; }
+[data-theme="dark"] .bg-canceled { background-color: #2a2a2a; border-left: 5px solid #555; color: #aaa; }
+
+/* Стиль для гіфки Мельника */
+.melnyk-gif { width: 35px; height: 35px; cursor: pointer; vertical-align: middle; margin-left: 10px; border-radius: 8px; transition: transform 0.2s; }
+.melnyk-gif:hover { transform: scale(1.1); }
