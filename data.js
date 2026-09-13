@@ -21,11 +21,11 @@ const scheduleNumerator = {
             { number: "8", time: "19:40-21:00", name: "Стратегічне управління людськими ресурсами", teacher: "проф. Приймак В. І.", type: "lec", room: "ауд.108", infoId: "strat-upr", locId: "main" }
         ]
     },
-    thursday: {
+   thursday: {
         title: "ЧЕТВЕР",
         classes: [
-            { number: "7", time: "18:10-19:30", name: "Інтелектуальні системи аналізу даних у менеджменті", teacher: "доц. Прийма С. С.", type: "lec", room: "ауд.203", infoId: "int-sys", locId: "main" },
-            { number: "8", time: "19:40-21:00", name: "Проектний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lec", room: "ауд.203", infoId: "proj-men", locId: "main" }
+            { number: "6 пара", time: "16:40-18:00", name: "Інтелектуальні системи аналізу даних у менеджменті", teacher: "доц. Прийма С. С.", type: "lec", room: "ауд.321", locId: "main", infoId: "pryima" },
+            { number: "7 пара", time: "18:10-19:30", name: "Проєктний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lec", room: "ауд.321", locId: "main", infoId: "nozdrina" }
         ]
     }
 };
@@ -52,9 +52,9 @@ const scheduleDenominator = {
     thursday: {
         title: "ЧЕТВЕР",
         classes: [
-            { number: "6", time: "16:40-18:00", name: "Проектний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lab", room: "ауд.211", infoId: "proj-men", locId: "main" },
-            { number: "7", time: "18:10-19:30", name: "Інтелектуальні системи аналізу даних у менеджменті", teacher: "доц. Прийма С. С.", type: "lec", room: "ауд.203", infoId: "int-sys", locId: "main" },
-            { number: "8", time: "19:40-21:00", name: "Проектний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lec", room: "ауд.203", infoId: "proj-men", locId: "main" }
+            { number: "6 пара", time: "16:40-18:00", name: "Інтелектуальні системи аналізу даних у менеджменті", teacher: "доц. Прийма С. С.", type: "lec", room: "ауд.321", locId: "main", infoId: "pryima" },
+            { number: "7 пара", time: "18:10-19:30", name: "Проєктний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lec", room: "ауд.321", locId: "main", infoId: "nozdrina" },
+            { number: "8 пара", time: "19:40-21:00", name: "Проєктний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lab", room: "ауд.321", locId: "main", infoId: "nozdrina" }
         ]
     }
 };
