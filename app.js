@@ -111,6 +111,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 let roomNumber = cls.room.replace('ауд.', '').trim();
                 let displayRoom = cls.locId === 'chornovola' ? `ауд. Ч${roomNumber}` : `ауд. ${roomNumber}`;
+                let cardType = cls.type;
+                let extraNote = '';
+                let gifHtml = '';
+
+                // ПРАВИЛО 1 ТА 2: Пари Приймака
+                if (cls.teacher.includes('Приймак')) {
+                    if (cls.type === 'lec') {
+                        cardType = 'canceled'; // Робимо сірим
+                        extraNote = '<br><span style="font-size: 0.85em; opacity: 0.7;">(Пара не проводиться)</span>';
+                    } else if (cls.type === 'sem') {
+                        displayRoom = 'дис.'; // Ставимо дистанційку
+                    }
+                }
+
+                // ПРАВИЛО 3: Гіфка Мельника
+                if (cls.teacher.includes('Мельник')) {
+                    gifHtml = `<img src="giphy.gif" class="melnyk-gif" onclick="alert('Поки пар нема тому чекаємо новин від Насті')" title="Натисни на мене!">`;
+                }
+                
+                classCard.className = `class-card bg-${cardType} ${isNow ? 'current-class' : ''}`;
                 
                 classCard.innerHTML = `
                     <div class="class-time">
@@ -118,9 +138,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         <span>${cls.time}</span>
                     </div>
                     <div class="class-info">
-                        ${cls.name},<br>
-                        ${cls.teacher}, ${cls.type === 'lab' ? 'лаб.' : cls.type === 'lec' ? 'лек.' : 'сем.'}, 
-                        <a href="geo.html?loc=${cls.locId}" class="class-link">${displayRoom}</a>
+                        <strong>${cls.name}</strong> ${gifHtml}<br>
+                        ${cls.teacher}, ${cls.type === 'lab' ? 'лаб.' : cls.type === 'lec' ? 'лек.' : 'сем.'} ${extraNote}
+                        <br><a href="geo.html?loc=${cls.locId}" class="class-link">${displayRoom}</a>
                     </div>
                     <a href="info.html?id=${cls.infoId}" class="info-btn">▶</a>
                 `;
