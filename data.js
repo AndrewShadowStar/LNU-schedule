@@ -24,8 +24,8 @@ const scheduleNumerator = {
    thursday: {
         title: "ЧЕТВЕР",
         classes: [
-            { number: "6 пара", time: "16:40-18:00", name: "Інтелектуальні системи аналізу даних у менеджменті", teacher: "доц. Прийма С. С.", type: "lec", room: "ауд.321", locId: "main", infoId: "pryima" },
-            { number: "7 пара", time: "18:10-19:30", name: "Проєктний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lec", room: "ауд.321", locId: "main", infoId: "nozdrina" }
+            { number: "6 пара", time: "16:40-18:00", name: "Інтелектуальні системи аналізу даних у менеджменті", teacher: "доц. Прийма С. С.", type: "lec", room: "ауд.321", locId: "main", infoId: "int-sys" },
+            { number: "7 пара", time: "18:10-19:30", name: "Проєктний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lec", room: "ауд.321", locId: "main", infoId: "proj-men" }
         ]
     }
 };
@@ -52,9 +52,9 @@ const scheduleDenominator = {
     thursday: {
         title: "ЧЕТВЕР",
         classes: [
-            { number: "6 пара", time: "16:40-18:00", name: "Інтелектуальні системи аналізу даних у менеджменті", teacher: "доц. Прийма С. С.", type: "lec", room: "ауд.321", locId: "main", infoId: "pryima" },
-            { number: "7 пара", time: "18:10-19:30", name: "Проєктний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lec", room: "ауд.321", locId: "main", infoId: "nozdrina" },
-            { number: "8 пара", time: "19:40-21:00", name: "Проєктний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lab", room: "ауд.321", locId: "main", infoId: "nozdrina" }
+            { number: "6 пара", time: "16:40-18:00", name: "Інтелектуальні системи аналізу даних у менеджменті", teacher: "доц. Прийма С. С.", type: "lec", room: "ауд.321", locId: "main", infoId: "int-sys" },
+            { number: "7 пара", time: "18:10-19:30", name: "Проєктний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lec", room: "ауд.321", locId: "main", infoId: "proj-men" },
+            { number: "8 пара", time: "19:40-21:00", name: "Проєктний менеджмент", teacher: "доц. Ноздріна Л. В.", type: "lab", room: "ауд.321", locId: "main", infoId: "proj-men" }
         ]
     }
 };
